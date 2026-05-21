@@ -32,3 +32,28 @@ test("Validar acesso à conta", async ({ page }) => {
     // Aqui você continuaria com os passos específicos do seu teste.
     console.log(`Teste em execução para o usuário: ${nomeUsuario}`);
 });
+
+
+import { test, expect } from '@playwright/test';
+
+test.describe("Abrir conta poupança", () => {
+    
+    test("Abrir conta poupança com sucesso", async ({ page }) => {
+        // Clica no link do menu lateral para abrir nova conta
+        await page.getByText("Open New Account").click();
+        
+        // Seleciona o tipo de conta como Poupança (SAVINGS)
+        await page.locator("#type").selectOption("SAVINGS");
+        
+        // Seleciona a conta de origem para transferência inicial
+        // Nota: O valor "54321" deve ser o ID de uma conta válida que você já possui no Parabank
+        await page.locator("#fromAccountId").selectOption("54321");
+        
+        // Clica no botão para confirmar a abertura da conta
+        await page.getByRole('button', { name: 'Open New Account' }).click();
+        
+        // Valida a mensagem de sucesso na tela
+        await expect(page.getByText("Congratulations, your account is now open.")).toBeVisible();
+    });
+
+});
