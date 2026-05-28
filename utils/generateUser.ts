@@ -1,12 +1,21 @@
 import { faker } from '@faker-js/faker';
 
 export function generateNewUser() {
+  // Gerando um nome e sobrenome aleatórios
+  const firstName = faker.person.firstName();
+  const lastName = faker.person.lastName();
+
   return {
-    // Gera um nome de usuário único (ex: Leonardo321)
-    usuario: `${faker.person.firstName()}${faker.number.int({ min: 100, max: 999 })}`,
-    // Gera uma senha alfanumérica simples
+
+    // Retorna um objeto com os dados do usuário, incluindo um username único e uma senha
+    firstName: firstName,
+    lastName: lastName,
+
+    // Cria um username único sem espaços
+    usuario: `${firstName}${faker.number.int({ min: 100, max: 9999 })}`,
     senha: faker.internet.password({ length: 8, memorable: true }),
-    // Gera o nome completo do usuário (ex: Leonardo Antonio)
-    nomeUsuario: `${faker.person.firstName()} ${faker.person.lastName()}`,
+    
+    // Nome completo para a validação do Welcome
+    nomeUsuario: `${firstName} ${lastName}`,
   };
 }
